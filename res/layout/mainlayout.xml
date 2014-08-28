@@ -12,15 +12,15 @@
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:text="Status"
-            android:textSize="22sp"
             android:layout_gravity="center"
             android:editable="false"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="Status"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Button" />
@@ -29,18 +29,81 @@
             android:id="@+id/editText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Office WiFi SSID"
-            android:ems="10" >
+            android:ems="10"
+            android:hint="Enter Office WiFi SSID" />
 
-            <requestFocus />
-        </EditText>
+<!--         <EditText
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:editable="false"
+            android:hint="Choose Action When At Office:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="14sp" /> -->
+
+<!--         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Silent" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vibrate" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Normal" />
+        </LinearLayout> -->
 
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Home SSID"
-            android:ems="10" />
+            android:ems="10"
+            android:hint="Enter Home SSID" />
+<!-- 
+        <EditText
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:editable="false"
+            android:hint="Choose Action When AtHome:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="14sp" /> -->
+
+<!--         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Silent" />
+
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vibrate" />
+
+            <RadioButton
+                android:id="@+id/radioButton6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Normal" />
+        </LinearLayout> -->
 
         <Button
             android:id="@+id/button2"
@@ -54,7 +117,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Reset" />
-
     </LinearLayout>
 
 </FrameLayout>

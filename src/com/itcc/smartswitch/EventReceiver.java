@@ -21,7 +21,7 @@ public class EventReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 
 		Boolean status_on = BusinessShardPreferenceUtil.getBoolean(context, MainActivity.KEY, true);
-		String home = BusinessShardPreferenceUtil.getString(context,MainActivity.KEY_HOME_SSID,"NEWHOME");
+		String home = BusinessShardPreferenceUtil.getString(context,MainActivity.KEY_HOME_SSID,"Tenda_1BE9E8");
 		String office = BusinessShardPreferenceUtil.getString(context,MainActivity.KEY_OFFICE_SSID,"Baiyi_Mobile");
 		if(!status_on){
 			return;

@@ -70,10 +70,16 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				String office_ssid = office.getText().toString();
-				BusinessShardPreferenceUtil.setString(MainActivity.this,KEY_OFFICE_SSID,office_ssid);
+				if(office_ssid != null && !office_ssid.equals("")){
+					BusinessShardPreferenceUtil.setString(MainActivity.this,KEY_OFFICE_SSID,office_ssid);
+				}
 				String home_ssid = home.getText().toString();
-				BusinessShardPreferenceUtil.setString(MainActivity.this,KEY_HOME_SSID,home_ssid);
-				text1.setText( "Office:"+office_ssid +" Home:"+home_ssid);
+				if(home_ssid != null && !home_ssid.equals("")){
+					BusinessShardPreferenceUtil.setString(MainActivity.this,KEY_HOME_SSID,home_ssid);
+				}
+				String home = BusinessShardPreferenceUtil.getString(MainActivity.this,MainActivity.KEY_HOME_SSID,"Tenda_1BE9E8");
+				String office = BusinessShardPreferenceUtil.getString(MainActivity.this,MainActivity.KEY_OFFICE_SSID,"Baiyi_Mobile");
+				text1.setText( "Office:"+office +" Home:"+home);
 			}
 		});
 		reset.setOnClickListener(new View.OnClickListener() {
@@ -81,8 +87,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				BusinessShardPreferenceUtil.setString(MainActivity.this,KEY_OFFICE_SSID,"Baiyi_Mobile");
-				BusinessShardPreferenceUtil.setString(MainActivity.this,KEY_HOME_SSID,"NEWHOME");
-				text1.setText( "Office:"+"Baiyi_Mobile" +" Home:"+"NEWHOME");
+				BusinessShardPreferenceUtil.setString(MainActivity.this,KEY_HOME_SSID,"Tenda_1BE9E8");
+				text1.setText( "Office:"+"Baiyi_Mobile" +" Home:"+"Tenda_1BE9E8");
 			}
 		});
 		
