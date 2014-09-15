@@ -117,6 +117,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Reset" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:editable="false"
+                android:ems="10"
+                android:hint="\n Start \n\n Sleep!\n"
+                android:textDirection="ltr"
+                android:textSize="18sp" >
+
+                <requestFocus />
+            </EditText>
+
+            <TimePicker
+                android:id="@+id/timePicker1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/button_set"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Set" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

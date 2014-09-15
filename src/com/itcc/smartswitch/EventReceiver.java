@@ -1,13 +1,18 @@
 package com.itcc.smartswitch;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.itcc.smartswitch.ui.MainActivity;
@@ -16,6 +21,8 @@ import com.itcc.utils.Logger;
 
 public class EventReceiver extends BroadcastReceiver {
 	private static final String TAG = "EventReceiver";
+	private static final long INTERVAL =  24 * 60 * 60 * 1000;
+
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -84,6 +91,13 @@ public class EventReceiver extends BroadcastReceiver {
 		}else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
 			Intent i = new Intent("com.itcc.smartswitch.action.LAUNCH_SERVICE");
 			context.startService(i);
+			refreshAlarm(context);
+		}else if(action.equals("com.itcc.smartswitch.action.ALARM")){
+			AudioManager am = (AudioManager) context
+					.getSystemService(Context.AUDIO_SERVICE);
+			am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+			Toast.makeText(context, "time up! set to Vibrate!", Toast.LENGTH_LONG).show();
+			refreshAlarm(context);
 		}
 	}
 
@@ -107,5 +121,41 @@ public class EventReceiver extends BroadcastReceiver {
 		}
 		return mode;
 	}
+	public void refreshAlarm(Context context) {
+		Log.i(TAG, "refresh alarm");
+		long now_time = System.currentTimeMillis();
+		AlarmManager am = (AlarmManager) context
+				.getSystemService(Context.ALARM_SERVICE);
+		Intent intent = new Intent("com.itcc.smartswitch.action.ALARM");
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,
+				intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		am.set(AlarmManager.RTC, now_time + INTERVAL,
+				pendingIntent);
+	}
+//    public static String getModel() {
+//        final String prop_key = "ro.product.model";
+//        String model = SystemProperties.get(prop_key, "nullmodel");
+//        Log.d(TAG, "getModel, it is " + model);
+//        return model;
+//    }
+//    public static long getInterval() {
+//        final String prop_key = "log.com.bsf.system.interval";
+//        long interval = Long.valueOf(SystemProperties.get(prop_key, String.valueOf(INTERVAL)));
+//        return interval;
+//    }
+    public static String getSettedModel(Context context, String metakey) {
+        ApplicationInfo info;
+        String metavalue = "100c";
+        try {
+            info = context.getPackageManager().getApplicationInfo(
+                    context.getPackageName(), PackageManager.GET_META_DATA);
+            if(info!=null && info.metaData != null) {
+                metavalue = info.metaData.getString(metakey);
+            }
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return metavalue;
+    }
 
 }
