@@ -24,13 +24,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Button" />
+        
+        <AutoCompleteTextView
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Home SSID"
+            android:completionHint="Will Change to Normal Mode Automatically!"
+            android:dropDownHorizontalOffset="20dp"
+            android:completionThreshold="1"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/editText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter Office WiFi SSID" />
+            android:hint="Enter Office WiFi SSID"
+            android:completionHint="Will Change to Vibrate Mode Automatically!"
+            android:dropDownHorizontalOffset="20dp"
+            android:completionThreshold="1"/>
 
 <!--         <EditText
             android:id="@+id/textView1"
@@ -65,12 +78,6 @@
                 android:text="Normal" />
         </LinearLayout> -->
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter Home SSID" />
 <!-- 
         <EditText
             android:id="@+id/textView1"
@@ -116,7 +123,8 @@
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Reset" />
+            android:text="Reset"
+            android:visibility="gone" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,7 +141,7 @@
                 android:layout_weight="1"
                 android:editable="false"
                 android:ems="10"
-                android:hint="\n Start \n\n Sleep!\n"
+                android:hint="Alarm to Start Vibrate Mode\n "
                 android:textDirection="ltr"
                 android:textSize="18sp" >
 
@@ -158,5 +166,14 @@
         </LinearLayout>
 
     </LinearLayout>
+        <EditText
+                android:id="@+id/editText4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+	            android:layout_gravity="bottom"
+	            android:layout_marginBottom="10dp"
+                android:editable="false"
+                android:hint="Tip: Only 3G Will Trigger Normal Mode!"
+                android:textSize="12sp" />
 
 </FrameLayout>

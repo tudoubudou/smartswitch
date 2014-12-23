@@ -47,7 +47,7 @@ public class EventReceiver extends BroadcastReceiver {
 //						break;
 					case SwitchState.STATE_RINGMODE_VIBRATE:
 						am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-						Toast.makeText(context, "noly 3g change to normal!", Toast.LENGTH_LONG).show();
+						Toast.makeText(context, "Noly 3g Change To Normal!", Toast.LENGTH_LONG).show();
 						break;
 					case SwitchState.STATE_RINGMODE_NORMAL:
 //						am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
@@ -64,10 +64,10 @@ public class EventReceiver extends BroadcastReceiver {
 								.getSystemService(Context.AUDIO_SERVICE);
 			            if(wifiname.indexOf(office)!=-1){
 							am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-							Toast.makeText(context, "in office change to Vibratel!", Toast.LENGTH_LONG).show();
+							Toast.makeText(context, "In Office Change To Vibratel!", Toast.LENGTH_LONG).show();
 			            }else if(wifiname.indexOf(home)!=-1){
 			            	am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-							Toast.makeText(context, "IN HOME change to normal!", Toast.LENGTH_LONG).show();
+							Toast.makeText(context, "In Home Change To Normal!", Toast.LENGTH_LONG).show();
 			            }
 			        }
 				}
@@ -91,7 +91,7 @@ public class EventReceiver extends BroadcastReceiver {
 		}else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
 			Intent i = new Intent("com.itcc.smartswitch.action.LAUNCH_SERVICE");
 			context.startService(i);
-			refreshAlarm(context);
+//			refreshAlarm(context);
 		}else if(action.equals("com.itcc.smartswitch.action.ALARM")){
 			AudioManager am = (AudioManager) context
 					.getSystemService(Context.AUDIO_SERVICE);
