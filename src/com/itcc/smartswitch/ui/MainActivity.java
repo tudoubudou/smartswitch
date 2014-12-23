@@ -10,6 +10,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -24,8 +25,11 @@ import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.Toast;
 
-import com.itcc.smartswitch.LogEx;
+import com.baidu.mobstat.StatService;
 import com.itcc.smartswitch.R;
+import com.itcc.smartswitch.UpdateManager;
+import com.itcc.smartswitch.utils.Constant;
+import com.itcc.smartswitch.utils.LogEx;
 import com.itcc.utils.BusinessShardPreferenceUtil;
 
 public class MainActivity extends Activity {
@@ -43,11 +47,19 @@ public class MainActivity extends Activity {
 	public final static String KEY_HOME_SSID = "key_home";
 	public final static String KEY_HOUR = "key_hour";
 	public final static String KEY_MINUTE = "key_minute";
+    public UpdateManager mUpdateManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		this.getWindow().addFlags(Window.FEATURE_NO_TITLE);
+        mUpdateManager = UpdateManager.getInastance(this);
+		// rigister update ricever
+        IntentFilter filter = new IntentFilter();
+        filter = new IntentFilter();
+        filter.addAction(Constant.ACTION_UPDATE_CONFIRM);
+        registerReceiver(mUpdateManager, filter);
+		checkNewVersionUpdate();
 		String home_ssid = BusinessShardPreferenceUtil.getString(this,KEY_HOME_SSID,"Not set");
         String office_ssid = BusinessShardPreferenceUtil.getString(this,KEY_OFFICE_SSID,"Not set");
 		Intent i = new Intent("com.itcc.smartswitch.action.LAUNCH_SERVICE");
@@ -59,13 +71,15 @@ public class MainActivity extends Activity {
 		WifiManager wm = (WifiManager) MainActivity.this.getSystemService(Context.WIFI_SERVICE);
 		List<WifiConfiguration> configs = wm.getConfiguredNetworks();
 		List<String> ssids = new ArrayList<String>();
-		for (WifiConfiguration config : configs){
-            ssids.add(config.SSID.substring(1, config.SSID.length()-1));
-		    LogEx.v(TAG ,config.toString());
+		if(configs != null){
+		    for (WifiConfiguration config : configs){
+		        ssids.add(config.SSID.substring(1, config.SSID.length()-1));
+//		        LogEx.v(TAG ,config.toString());
+		    }
+		    ArrayAdapter<String> ad = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,ssids);
+		    home.setAdapter(ad);
+		    office.setAdapter(ad);
 		}
-		ArrayAdapter<String> ad = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,ssids);
-		home.setAdapter(ad);
-		office.setAdapter(ad);
 		btn1 = (Button)findViewById(R.id.button1);
 		set = (Button)findViewById(R.id.button2);
 		setTime = (Button)findViewById(R.id.button_set);
@@ -191,6 +205,29 @@ public class MainActivity extends Activity {
 		am.cancel(pendingIntent);
         Toast.makeText(MainActivity.this, "cancel Alarm!", Toast.LENGTH_LONG).show();
 	}
+	private void checkNewVersionUpdate() {
+        UpdateManager updateManager = UpdateManager.getInastance(this.getApplicationContext());
+        updateManager.checkUpdate(Constant.AUTO_CHECK_TYPE);
+    }
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mUpdateManager);
+        super.onDestroy();
+    }
+    @Override
+    protected void onResume() {
+        StatService.onResume(this);
+        LogEx.d(TAG, "onResume");
+        super.onResume();
+    }
+    @Override
+    protected void onPause() {
+        StatService.onPause(this);
+        LogEx.d(TAG, "onPause");
+        super.onPause();
+    }
+    
+	
 	
 
 }

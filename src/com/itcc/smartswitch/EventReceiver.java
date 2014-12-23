@@ -15,7 +15,10 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.itcc.smartswitch.network.DownloadFinishTask;
+import com.itcc.smartswitch.network.DownloadNotifManager;
 import com.itcc.smartswitch.ui.MainActivity;
+import com.itcc.smartswitch.utils.Constant;
 import com.itcc.utils.BusinessShardPreferenceUtil;
 import com.itcc.utils.Logger;
 
@@ -98,7 +101,28 @@ public class EventReceiver extends BroadcastReceiver {
 			am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 			Toast.makeText(context, "time up! set to Vibrate!", Toast.LENGTH_LONG).show();
 			refreshAlarm(context);
-		}
+		}else if (action.equals(Constant.ACTION_DOWNLOAD_PROGRESS)) {
+            long id = intent.getLongExtra(Constant.EXTRA_ID, -1);
+            long total = intent.getLongExtra(Constant.EXTRA_TOTAL, 0);
+            long current = intent.getLongExtra(Constant.EXTRA_CURRENT, 0);
+            DownloadNotifManager.getInstance(context)
+                    .updateProgressNotification(id, total, current);
+        } else if (action.equals(Constant.ACTION_DOWNLOAD_COMPOLETED)) {
+            long id = intent.getLongExtra(Constant.EXTRA_ID, -1);
+            int result = intent.getIntExtra(Constant.EXTRA_RESULT, -1);
+            DownloadNotifManager.getInstance(context).updateCompletedNotification(id, result);
+            String path = intent.getStringExtra(Constant.EXTRA_DEST_PATH);
+            int need_notify = intent.getIntExtra(Constant.EXTRA_NOTIFY_TYPE, -1);
+            if (need_notify != -1) {
+                DownloadFinishTask task = new DownloadFinishTask(context, result, need_notify, path);
+                Constant.mExecutorService.submit(task);
+            }
+        }else if (action.equals(Constant.ACTION_DOWNLOAD_SHOWFAILMSG)) {
+            String s = intent.getStringExtra(Constant.FAIL_MSG);
+            if (s != null && !s.equals("")){
+              Toast.makeText(context, s, Toast.LENGTH_LONG).show();
+            }
+        }
 	}
 
 	public int getActualRingState(Context context) {

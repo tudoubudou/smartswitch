@@ -22,9 +22,6 @@
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
     <!-- switch tool widget -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -41,8 +38,8 @@
         android:label="@string/app_name" >
         <activity
             android:name="com.itcc.smartswitch.ui.MainActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,25 +47,52 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name="com.itcc.smartswitch.EventReceiver">
+        <receiver android:name="com.itcc.smartswitch.EventReceiver"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="com.itcc.smartswitch.action.ALARM"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.itcc.smartswitch.action.ALARM" />
+                <action android:name="com.itcc.smartswitch.download_start" />
+                <action android:name="com.itcc.smartswitch.download_progress" />
+                <action android:name="com.itcc.smartswitch.download_completed" />
             </intent-filter>
         </receiver>
-                
-        <service android:name="com.itcc.smartswitch.LaunchService"
-            android:exported="true">
+
+        <service
+            android:name="com.itcc.smartswitch.LaunchService"
+            android:exported="true" >
             <intent-filter>
-                <action
-                    android:name="com.itcc.smartswitch.action.LAUNCH_SERVICE" />
+                <action android:name="com.itcc.smartswitch.action.LAUNCH_SERVICE" />
             </intent-filter>
         </service>
-                <meta-data
+
+        <provider
+            android:exported="false"
+            android:name="com.itcc.smartswitch.db.SmartSwitchProvider"
+            android:authorities="com.itcc.smartswitch.main.downloads" >
+        </provider>
+
+        <meta-data
             android:name="ModelName"
-            android:value="100C" />
+            android:value="temp" />
+        <!-- stat API begin -->
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="670f136683" />
+        <meta-data
+            android:name="BaiduMobAd_CHANNEL"
+            android:value="test" />
+        <meta-data
+            android:name="BaiduMobAd_EXCEPTION_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="BaiduMobAd_SEND_STRATEGY"
+            android:value="APP_START" />
+        <meta-data
+            android:name="BaiduMobAd_ONLY_WIFI"
+            android:value="false" />
+        <!-- stat baidu stat API end -->
     </application>
 
 </manifest>

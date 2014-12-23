@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/body"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+      >
+    <RelativeLayout 
+		android:orientation="horizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginBottom="14dp"
+	    android:layout_marginTop="14dp"
+	    android:layout_marginLeft="10dp"
+     >
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentRight="true"
+            android:textColor="#4f5555"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:id="@+id/downloading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#4f5555"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/message"
+            android:textSize="16sp"/>
+
+       
+ 	</RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:max="100" />
+
+</LinearLayout>

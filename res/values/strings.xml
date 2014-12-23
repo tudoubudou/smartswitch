@@ -1,5 +1,33 @@
 <resources>
 
     <string name="app_name">smartSwitch</string>
+    <string name="toast_update">Already the latest version</string>
+    <string name="toast_update_tip">Baidu LightOs Update</string>
+    <string name="no_update">Not Now</string>
+    <string name="update_now">Update</string>
+    <string name="cur_version_tip">current version is </string>
+    <string name="new_version_tip">new version is </string>
+    <string name="update_ask">update now ? </string>
+    <string name="notification_update_ask">Baidu LightOS has new version, update now?</string>
+    <string name="update_failure">Baidu LightOS update failure, please check the network status.</string>
+    <string name="sd_card_not_mounted">Please add SD card.</string>
+    <string name="auto_check_update">Baidu LightOS has new version</string>
+    <string name="update_notify">Launcher update</string>
+    <!-- download begin -->
+    <string name="downloading_theme">Downloading</string>
+    <string name="downloaded_failure">Download Failed</string>
+    <string name="downloaded_success">Download Successful,click to apply</string>
+    <string name="downloading_notify">Downloading</string>
+    <string name="cancel_download">Abort Download</string>
+    <string name="hide">Hide</string>
+    <string name="download">Download</string>
+    <string name="dialog_download_title">Tip</string>
+    <string name="dialog_download_text">You haven\'t installed %1$s, immediately download and install it?</string>
+    <string name="app_downloading">This app is Downloading!</string>
+    <string name="download_network_invalid_toast">Network unavailable, please try again</string>
+    <string name="download_failed_toast">Download Failed</string>
+    <string name="download_sdcard_status_error">Download failed,SD card can not access.</string>
+    <string name="toast_download_fail_storage">Download failed for insufficient external storage space</string>
+    <!--download end  -->
 
 </resources>

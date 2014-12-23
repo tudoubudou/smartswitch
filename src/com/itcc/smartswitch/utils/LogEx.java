@@ -1,5 +1,5 @@
 
-package com.itcc.smartswitch;
+package com.itcc.smartswitch.utils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,8 +29,8 @@ import android.util.Log;
  */
 
 public class LogEx {
-    public static final String TAG = "Baidu LightOS";
-    public static final String DEBUG_KEY = "com.lightos.debug";
+    public static final String TAG = "SmartSwitch";
+    public static final String DEBUG_KEY = "com.itcc.debug";
 
     public static final String LOG_DIR = "BaiduLightOS";
     public static final String LOG_NAME = "log.txt";
