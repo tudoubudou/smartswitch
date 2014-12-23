@@ -2,17 +2,17 @@
 
     <string name="app_name">smartSwitch</string>
     <string name="toast_update">Already the latest version</string>
-    <string name="toast_update_tip">Baidu LightOs Update</string>
+    <string name="toast_update_tip">SmartSwitch Update</string>
     <string name="no_update">Not Now</string>
     <string name="update_now">Update</string>
     <string name="cur_version_tip">current version is </string>
     <string name="new_version_tip">new version is </string>
     <string name="update_ask">update now ? </string>
-    <string name="notification_update_ask">Baidu LightOS has new version, update now?</string>
-    <string name="update_failure">Baidu LightOS update failure, please check the network status.</string>
+    <string name="notification_update_ask">SmartSwitch has new version, update now?</string>
+    <string name="update_failure">SmartSwitch update failure, please check the network status.</string>
     <string name="sd_card_not_mounted">Please add SD card.</string>
-    <string name="auto_check_update">Baidu LightOS has new version</string>
-    <string name="update_notify">Launcher update</string>
+    <string name="auto_check_update">SmartSwitch has new version</string>
+    <string name="update_notify">SmartSwitch update</string>
     <!-- download begin -->
     <string name="downloading_theme">Downloading</string>
     <string name="downloaded_failure">Download Failed</string>
