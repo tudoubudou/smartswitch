@@ -49,6 +49,7 @@ public class DownloadNotifManager {
         private String mTitle; // download title.
         /** Ticker text */
         public Intent mIntent = null;
+        public long when;
     }
 
     public static synchronized DownloadNotifManager getInstance(Context aContext) {
@@ -192,6 +193,7 @@ public class DownloadNotifManager {
         NotificationItem item = new NotificationItem();
         item.mTitle = title;
         item.mIntent = intent;
+        item.when = System.currentTimeMillis();
         notifMap.put(id, item);
     }
 
@@ -218,12 +220,11 @@ public class DownloadNotifManager {
             ni.mIntent.putExtra(Constant.EXTRA_PROGRESS, progress);
             PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, ni.mIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
-
             notif.icon = iconResource;
             notif.tickerText = mContext.getResources().getString(R.string.downloading_notify, ni.mTitle);
 //            notif.contentIntent =  contentIntent;
             notif.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_AUTO_CANCEL;
-
+            notif.when = ni.when;
             RemoteViews contentView = new RemoteViews(mContext.getPackageName(), R.layout.notification_download);
             contentView.setTextViewText(R.id.statusbar_download_title, ni.mTitle);
             contentView.setTextViewText(R.id.statusbar_download_progress, String.valueOf(progress)+"%");

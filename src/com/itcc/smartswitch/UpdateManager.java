@@ -1,6 +1,7 @@
 
 package com.itcc.smartswitch;
 
+import java.io.File;
 import java.util.HashMap;
 
 import org.json.JSONObject;
@@ -220,8 +221,12 @@ public class UpdateManager extends BroadcastReceiver {
                                  mSavePath + mSaveName, "application",
                                  notificationTitle, null, false, true,
                                  Constant.NOTIFY_TYPE_NEW_VERSION_UPDATE_APK,false);
+                         Intent successIntent = new Intent(Intent.ACTION_VIEW);
+                         successIntent.setDataAndType(Uri.fromFile(new File(mSavePath + mSaveName)),
+                                 "application/vnd.android.package-archive");
+                         successIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                          DownloadNotifManager.getInstance(mContext).addNotification(id, true, null,
-                                 true, null, true, null);
+                                 true, successIntent, true, null);
                          StatUpdateAgent.postUserChoice(mContext,
                                  KirinConfig.CONFIRM_UPDATE, mPostChoiceListener );
                 	}                	
