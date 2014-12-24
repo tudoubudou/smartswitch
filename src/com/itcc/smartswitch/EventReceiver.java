@@ -33,13 +33,16 @@ public class EventReceiver extends BroadcastReceiver {
 		Boolean status_on = BusinessShardPreferenceUtil.getBoolean(context, MainActivity.KEY, true);
 		String home = BusinessShardPreferenceUtil.getString(context,MainActivity.KEY_HOME_SSID,"Tenda_1BE9E8");
 		String office = BusinessShardPreferenceUtil.getString(context,MainActivity.KEY_OFFICE_SSID,"Baiyi_Mobile");
-		if(!status_on){
-			return;
+		long alarm_time = BusinessShardPreferenceUtil.getLong(context,MainActivity.KEY_ALARM,0);
+		long current_time = System.currentTimeMillis();
+		boolean sleepping_time = false;
+		if(current_time > alarm_time && current_time < alarm_time + 8 * 60 * 60 * 1000){
+		    sleepping_time = true;
 		}
 		String action = intent.getAction();
 		Logger.d(TAG, "onReceive intent is " + intent + ", action is " + action);
 		if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-			if (com.itcc.utils.PhoneInfoStateManager
+			if (status_on && !sleepping_time && com.itcc.utils.PhoneInfoStateManager
 					.isNetworkAvailable(context)) {
 				if(!com.itcc.utils.PhoneInfoStateManager.isWifiConnection(context)){
 					AudioManager am = (AudioManager) context
@@ -74,7 +77,7 @@ public class EventReceiver extends BroadcastReceiver {
 			            }
 			        }
 				}
-			} else {
+			} else if(status_on && !sleepping_time) {
 				AudioManager am = (AudioManager) context
 						.getSystemService(Context.AUDIO_SERVICE);
 				Logger.d(TAG, "ring state is " + getActualRingState(context));
@@ -92,15 +95,19 @@ public class EventReceiver extends BroadcastReceiver {
 				}
 			}
 		}else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-			Intent i = new Intent("com.itcc.smartswitch.action.LAUNCH_SERVICE");
-			context.startService(i);
+		    if(status_on){
+		        Intent i = new Intent("com.itcc.smartswitch.action.LAUNCH_SERVICE");
+		        context.startService(i);
 //			refreshAlarm(context);
+		    }
 		}else if(action.equals("com.itcc.smartswitch.action.ALARM")){
-			AudioManager am = (AudioManager) context
-					.getSystemService(Context.AUDIO_SERVICE);
-			am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-			Toast.makeText(context, "time up! set to Vibrate!", Toast.LENGTH_LONG).show();
-			refreshAlarm(context);
+		    if(status_on){
+		        AudioManager am = (AudioManager) context
+		                .getSystemService(Context.AUDIO_SERVICE);
+		        am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+		        Toast.makeText(context, "time up! set to Vibrate!", Toast.LENGTH_LONG).show();
+		        refreshAlarm(context);
+		    }
 		}else if (action.equals(Constant.ACTION_DOWNLOAD_PROGRESS)) {
             long id = intent.getLongExtra(Constant.EXTRA_ID, -1);
             long total = intent.getLongExtra(Constant.EXTRA_TOTAL, 0);

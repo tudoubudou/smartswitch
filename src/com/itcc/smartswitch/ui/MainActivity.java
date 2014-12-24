@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
 	public final static String KEY_HOME_SSID = "key_home";
 	public final static String KEY_HOUR = "key_hour";
 	public final static String KEY_MINUTE = "key_minute";
+	public final static String KEY_ALARM = "key_alarm_time";
     public UpdateManager mUpdateManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +179,7 @@ public class MainActivity extends Activity {
 		            Toast.makeText(MainActivity.this, "set Alarm at " + hint, Toast.LENGTH_LONG).show();
 		            BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_HOUR, tm.getCurrentHour());
 		            BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_MINUTE, tm.getCurrentMinute());
+		            BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_ALARM, setTime);
 		        }else{
 		            Toast.makeText(MainActivity.this, "please turn on first", Toast.LENGTH_LONG).show();
 		        }

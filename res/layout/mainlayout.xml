@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter Home SSID"
+            android:hint="Enter Name Of Wifi At Home"
             android:completionHint="Will Change to Normal Mode Automatically!"
             android:dropDownHorizontalOffset="20dp"
             android:completionThreshold="1"/>
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter Office WiFi SSID"
+            android:hint="Enter Name Of Wifi In Office"
             android:completionHint="Will Change to Vibrate Mode Automatically!"
             android:dropDownHorizontalOffset="20dp"
             android:completionThreshold="1"/>
@@ -173,7 +173,7 @@
 	            android:layout_gravity="bottom"
 	            android:layout_marginBottom="10dp"
                 android:editable="false"
-                android:hint="Tip: Only 3G Will Trigger Normal Mode!"
+                android:hint="@string/tip"
                 android:textSize="12sp" />
 
 </FrameLayout>

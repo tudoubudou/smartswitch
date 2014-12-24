@@ -29,5 +29,6 @@
     <string name="download_sdcard_status_error">Download failed,SD card can not access.</string>
     <string name="toast_download_fail_storage">Download failed for insufficient external storage space</string>
     <!--download end  -->
+    <string name="tip">Tip: \nNo Network Or Only 3G Will Trigger Normal Mode\nEnter Home Will Trigger Normal Mode\nEnter Office Will Trigger Vibrate Mode</string>
 
 </resources>
