@@ -53,6 +53,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="com.itcc.smartswitch.action.ALARM" />
+                <action android:name="com.itcc.smartswitch.action.ALARM_EXIT_SLEEP" />
                 <action android:name="com.itcc.smartswitch.download_start" />
                 <action android:name="com.itcc.smartswitch.download_progress" />
                 <action android:name="com.itcc.smartswitch.download_completed" />

@@ -100,15 +100,23 @@ public class EventReceiver extends BroadcastReceiver {
 		        context.startService(i);
 //			refreshAlarm(context);
 		    }
-		}else if(action.equals("com.itcc.smartswitch.action.ALARM")){
+		}else if(action.equals(Constant.ACTION_SLEEP_ALARM)){
 		    if(status_on){
 		        AudioManager am = (AudioManager) context
 		                .getSystemService(Context.AUDIO_SERVICE);
 		        am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-		        Toast.makeText(context, "time up! set to Vibrate!", Toast.LENGTH_LONG).show();
+		        Toast.makeText(context, "Time To Sleep! Set To Vibrate!", Toast.LENGTH_LONG).show();
 		        refreshAlarm(context);
 		    }
-		}else if (action.equals(Constant.ACTION_DOWNLOAD_PROGRESS)) {
+		}else if(action.equals(Constant.ACTION_EXIT_SLEEP)){
+            if(status_on){
+                AudioManager am = (AudioManager) context
+                        .getSystemService(Context.AUDIO_SERVICE);
+                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                Toast.makeText(context, "Wake Up! Set To Normal!", Toast.LENGTH_LONG).show();
+                refreshExitAlarm(context);
+            }
+        }else if (action.equals(Constant.ACTION_DOWNLOAD_PROGRESS)) {
             long id = intent.getLongExtra(Constant.EXTRA_ID, -1);
             long total = intent.getLongExtra(Constant.EXTRA_TOTAL, 0);
             long current = intent.getLongExtra(Constant.EXTRA_CURRENT, 0);
@@ -157,11 +165,23 @@ public class EventReceiver extends BroadcastReceiver {
 		long now_time = System.currentTimeMillis();
 		AlarmManager am = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent("com.itcc.smartswitch.action.ALARM");
+		Intent intent = new Intent(Constant.ACTION_SLEEP_ALARM);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,
 				intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		am.set(AlarmManager.RTC, now_time + INTERVAL,
 				pendingIntent);
+        BusinessShardPreferenceUtil.setLong(context, MainActivity.KEY_ALARM, now_time + INTERVAL);
+	}
+	public void refreshExitAlarm(Context context) {
+	    Log.i(TAG, "refresh exit sleep alarm");
+	    long now_time = System.currentTimeMillis();
+	    AlarmManager am = (AlarmManager) context
+	            .getSystemService(Context.ALARM_SERVICE);
+	    Intent intent = new Intent(Constant.ACTION_EXIT_SLEEP);
+	    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 2,
+	            intent, PendingIntent.FLAG_CANCEL_CURRENT);
+	    am.set(AlarmManager.RTC, now_time + INTERVAL,
+	            pendingIntent);
 	}
 //    public static String getModel() {
 //        final String prop_key = "ro.product.model";

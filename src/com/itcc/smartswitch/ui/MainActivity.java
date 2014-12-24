@@ -33,6 +33,9 @@ import com.itcc.smartswitch.utils.LogEx;
 import com.itcc.utils.BusinessShardPreferenceUtil;
 
 public class MainActivity extends Activity {
+    public static final long INTERVAL =  24 * 60 * 60 * 1000;
+    private final static  String TAG = MainActivity.class.getSimpleName();
+    private long last_touch_time = 0;
 	Button btn1;
 	Button set;
 	Button reset;
@@ -41,7 +44,6 @@ public class MainActivity extends Activity {
 	AutoCompleteTextView home;
 	AutoCompleteTextView office;
 	TimePicker tm;
-    private final static  String TAG = MainActivity.class.getSimpleName();
 	public final static String KEY = "SwitchStatus";
 	public final static String KEY_OFFICE_SSID = "key_office";
 	public final static String KEY_HOME_SSID = "key_home";
@@ -167,19 +169,18 @@ public class MainActivity extends Activity {
 		            long setTime = t.toMillis(true);
 		            long currentTime = System.currentTimeMillis();
 		            if(setTime < currentTime){
-		                setTime += 24 * 60 * 60 * 1000;
-		                cancelAlarm(MainActivity.this);
-		                setAlarm(MainActivity.this,setTime);
-		            }else{
-		                cancelAlarm(MainActivity.this);
-		                setAlarm(MainActivity.this,setTime);
+		                setTime += INTERVAL;
 		            }
 		            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm");  
 		            String hint=format.format(new Date(setTime));
 		            Toast.makeText(MainActivity.this, "set Alarm at " + hint, Toast.LENGTH_LONG).show();
-		            BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_HOUR, tm.getCurrentHour());
-		            BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_MINUTE, tm.getCurrentMinute());
-		            BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_ALARM, setTime);
+		            if(System.currentTimeMillis() - last_touch_time > 500){
+		                setAlarm(MainActivity.this,setTime);
+		                BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_HOUR, tm.getCurrentHour());
+		                BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_MINUTE, tm.getCurrentMinute());
+		                BusinessShardPreferenceUtil.setLong(MainActivity.this, KEY_ALARM, setTime);
+		                last_touch_time = System.currentTimeMillis();
+		            }
 		        }else{
 		            Toast.makeText(MainActivity.this, "please turn on first", Toast.LENGTH_LONG).show();
 		        }
@@ -191,20 +192,27 @@ public class MainActivity extends Activity {
 //		Log.i(TAG, "refresh alarm");
 		AlarmManager am = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent("com.itcc.smartswitch.action.ALARM");
+		Intent intent = new Intent(Constant.ACTION_SLEEP_ALARM);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,
 				intent, PendingIntent.FLAG_CANCEL_CURRENT);
-		am.set(AlarmManager.RTC, setTime,
-				pendingIntent);
+		am.set(AlarmManager.RTC, setTime,pendingIntent);
+		Intent exit_sleep_intent = new Intent(Constant.ACTION_EXIT_SLEEP);
+		PendingIntent exit_sleep_pendingIntent = PendingIntent.getBroadcast(context, 2,
+		        exit_sleep_intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		am.set(AlarmManager.RTC, setTime+INTERVAL,exit_sleep_pendingIntent);
 	}
 	public void cancelAlarm(Context context) {
 //		Log.i(TAG, "refresh alarm");
 		AlarmManager am = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent("com.itcc.smartswitch.action.ALARM");
+		Intent intent = new Intent(Constant.ACTION_SLEEP_ALARM);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,
 				intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		am.cancel(pendingIntent);
+		Intent exit_sleep_intent = new Intent(Constant.ACTION_EXIT_SLEEP);
+        PendingIntent exit_sleep_pendingIntent = PendingIntent.getBroadcast(context, 2,
+                exit_sleep_intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        am.cancel(exit_sleep_pendingIntent);
         Toast.makeText(MainActivity.this, "cancel Alarm!", Toast.LENGTH_LONG).show();
 	}
 	private void checkNewVersionUpdate() {

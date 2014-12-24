@@ -63,6 +63,8 @@ public class Constant {
     public static final String ACTION_DOWNLOAD_PROGRESS = PACKAGENAME + ".download_progress";
     public static final String ACTION_DOWNLOAD_COMPOLETED = PACKAGENAME + ".download_completed";
     public static final String ACTION_DOWNLOAD_SHOWFAILMSG = PACKAGENAME + ".showMsg";
+    public static final String ACTION_EXIT_SLEEP = PACKAGENAME + ".action.ALARM_EXIT_SLEEP";
+    public static final String ACTION_SLEEP_ALARM = PACKAGENAME + ".action.ALARM";
     public static final String FAIL_MSG = "DownloadFailMsg";
     public static final int PROGRESS_INTERVAL = 1000;
     public final static ExecutorService mExecutorService = Executors.newCachedThreadPool();
